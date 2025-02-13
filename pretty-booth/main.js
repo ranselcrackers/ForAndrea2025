@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   window.location.href = 'index.html';
                   break;
               case 'ForAndrea<3':
-                  window.location.href = '../for-andrea-letter/index.html';
+                  window.location.href = '../index.html';
                   break;
               case 'read me':
                   window.location.href = 'read me.html';
