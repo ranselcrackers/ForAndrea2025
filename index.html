@@ -1,46 +1,270 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-        <title>ForAndrea<3</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <title>For Andrea<3</title>
+    <!-- Style CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-color: #F8F4F9; /* Light lavender background */
+            color: #4A4A4A;
+            overflow: hidden; /* Hide confetti overflow */
+        }
 
-        <!-- Style CSS -->
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="./style.css">
-    </head>
-    <body>
-    	<div class="super-big-text">ForAndrea<3</div>     
-	<h1 class="valentine">boogsh! i have a letter for u! click the envelope ←(･_･┐)</h1>
-        <div class="envelope-wrapper">
-            <div id="envelope" class="close">
-                <div class="front flap"></div>
-                <div class="front pocket"></div>
-                <div class="letter">
-                    <p class="words line1">Dear Andrea,</p>
-                    <p class="words line2">Will you be my Valentine?</p>
-                    <p class="words line3"><i>Your friend,</i></p>
-                    <p class="words line4"><i>Russel</i></p>
-                </div>
-                <div class="hearts">
-                    <div class="heart a1"></div>
-                    <div class="heart a2"></div>
-                    <div class="heart a3"></div>
-                </div>
-            </div>
-        </div>
-	<div class="reset">
-    	    <button id="open">Open</button>
-            <button id="reset">Close</button>
-        </div>
-        <div class="action-buttons">
-            <a href="serenade-ransel/index.html" class="rounded"><h2>Serenade</h2></a>
-            <a href="pretty-booth/index.html" class="rounded"><h2>Pretty Booth</h2></a>
-        </div>
+        .envelope-wrapper {
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #envelope {
+            position: relative;
+            height: 180px;
+            width: 280px;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #CDB4DB; /* Soft lavender envelope */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .front {
+            position: absolute;
+            width: 0;
+            height: 0;
+            z-index: 3;
+        }
+
+        .flap {
+            border-top: 98px solid #CDB4DB; /* Match envelope color */
+            border-left: 140px solid transparent;
+            border-right: 140px solid transparent;
+            border-bottom: 82px solid transparent;
+            transform-origin: top;
+            transition: transform 0.4s 0.6s ease, z-index 1s;
+        }
+
+        .pocket {
+            border-left: 140px solid #BDE0FE; /* Light blue */
+            border-right: 140px solid #BDE0FE; /* Light blue */
+            border-bottom: 90px solid #A2D2FF; /* Slightly darker light blue */
+            border-top: 90px solid transparent;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
+
+        .letter {
+            position: relative;
+            background-color: #ffffff;
+            width: 90%;
+            height: 90%;
+            top: 5%;
+            border-radius: 10px;
+            box-shadow: 0 2px 26px rgba(0, 0, 0, .08);
+            margin-left: auto;
+            margin-right: auto;
+            transition: transform 0.4s ease, z-index 1s;
+            z-index: 1;
+        }
+
+        .words {
+            position: absolute;
+            left: 10%;
+            width: 80%;
+            height: 14%;
+            font-size: 15px;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+        }
+
+        .line1 { top: 15%; }
+        .line2 { top: 30%; font-size: 16px; font-weight: 700; }
+        .line3 { top: 53%; text-align: left; }
+        .line4 { top: 63%; text-align: left; }
+
+        /* Envelope Open/Close States */
+        .open .flap {
+            transform: rotatex(180deg);
+            transition: transform 0.4s ease, z-index 0.6s;
+            z-index: 1;
+        }
+
+        .open .letter {
+            transform: translateY(-120px);
+            transition: transform 0.4s 0.6s ease, z-index 0.6s;
+            z-index: 2;
+        }
         
+        .close .flap { z-index: 5; }
+        .close .letter { transform: translateY(0px); }
 
-        <!-- Script JS -->
-        <script src="./script.js"></script>
-    </body>
+
+        .super-big-text {
+            font-size: clamp(2.5rem, 8vw, 6rem); /* Responsive font size */
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            color: #A084E8; /* Medium purple */
+            margin-bottom: 10px;
+            font-weight: 900;
+        }
+
+        .valentine {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            color: rgb(20, 20, 20);
+            font-size: 24px;
+            margin-top: 0;
+            max-width: 90%;
+        }
+
+        /* Confetti Styles */
+        .confetti-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 16px;
+            opacity: 0;
+            top: 0;
+            left: 50%;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: translate(0, 20px) rotateZ(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(calc(var(--x-end) / 2), -150px) rotateZ(360deg);
+            }
+            100% {
+                transform: translate(var(--x-end), 500px) rotateZ(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Action buttons below */
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .rounded {
+            text-decoration: none;
+            padding: 10px 30px;
+            border-radius: 25px;
+            border: 2px solid #A084E8;
+            background-color: transparent;
+            color: #A084E8;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .rounded:hover {
+            background-color: #A084E8;
+            color: white;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="super-big-text">For Andrea<3</div>
+    <h1 class="valentine">boogsh! i have a letter for u! click the envelope ←(･_･┐)</h1>
+    <div class="envelope-wrapper">
+        <div id="envelope" class="close">
+            <div class="front flap"></div>
+            <div class="front pocket"></div>
+            <div class="letter">
+                <p class="words line1">Dear Andrea,</p>
+                <p class="words line2">Happy 20th Birthday, Andrea!</p>
+                <p class="words line3"><i>Your creatives partner...</i></p>
+                <p class="words line4"><i>Russel</i></p>
+            </div>
+            <div class="confetti-container"></div>
+        </div>
+    </div>
+    <div class="action-buttons">
+        <a href="#" class="rounded"><h2>Serenade</h2></a>
+        <a href="#" class="rounded"><h2>Pretty Booth</h2></a>
+    </div>
+
+    <!-- Script JS -->
+    <script>
+        $(document).ready(function() {
+            const envelope = $("#envelope");
+            const confettiContainer = $(".confetti-container");
+            const colors = ['#CDB4DB', '#BDE0FE', '#A2D2FF', '#FFAFCC', '#A084E8'];
+
+            function createConfetti() {
+                confettiContainer.empty();
+                for (let i = 0; i < 100; i++) {
+                    const confetti = $('<div class="confetti"></div>');
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    const size = Math.random() * 8 + 8; // width/height
+                    const animDuration = Math.random() * 3 + 2; // 2s to 5s
+                    const animDelay = Math.random() * 0.2; 
+                    const xEnd = Math.random() * 400 - 200; // -200px to 200px horizontal spread
+
+                    confetti.css({
+                        'background-color': color,
+                        'width': (size / 2) + 'px',
+                        'height': size + 'px',
+                        '--x-end': xEnd + 'px',
+                        'animation': `explode ${animDuration}s linear ${animDelay}s forwards`,
+                    });
+                    confettiContainer.append(confetti);
+                }
+            }
+
+            function open() {
+                if (envelope.hasClass("close")) {
+                    envelope.removeClass("close").addClass("open");
+                    createConfetti();
+                }
+            }
+
+            function close() {
+                envelope.removeClass("open").addClass("close");
+            }
+
+            envelope.click(function() {
+                if (envelope.hasClass("open")) {
+                    close();
+                } else {
+                    open();
+                }
+            });
+        });
+    </script>
+</body>
 </html>
+
+
